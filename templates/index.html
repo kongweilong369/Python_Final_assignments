@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/style.css">
+    <title>图片上传与检测</title>
+    <!-- 引入 animate.js -->
+    <script src="../static/animate.js"></script>
+</head>
+
+<body>
+    <h1>图片上传与检测</h1>
+
+    <!-- 图片上传区域 -->
+    <input type="file" id="image-upload" accept="image/*">
+
+    <div>
+        <h3>上传的图片：</h3>
+        <img id="uploaded-image" src="" alt="没有上传图片" style="max-width: 500px; display: none;">
+    </div>
+
+    <button id="detect-btn" class="animate-btn" onclick="detectImage()">开始检测</button>
+
+    <!-- 显示检测结果 -->
+    <div id="result">
+        <h3>检测结果：</h3>
+        <p id="detection-output">请上传一张图片进行检测。</p>
+    </div>
+
+    <script>
+        // 监听图片上传事件
+        const imageInput = document.getElementById('image-upload');
+        const uploadedImage = document.getElementById('uploaded-image');
+
+        imageInput.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    uploadedImage.src = e.target.result;
+                    uploadedImage.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // 发送图片到后端进行检测
+        async function detectImage() {
+            const imageElement = document.getElementById('uploaded-image');
+            const resultText = document.getElementById('detection-output');
+
+            // 如果没有上传图片
+            if (!imageElement.src) {
+                resultText.innerText = '请先上传一张图片。';
+                return;
+            }
+
+            // 获取上传的文件
+            const fileInput = document.getElementById('image-upload');
+            const file = fileInput.files[0];
+            const formData = new FormData();
+            formData.append('file', file);
+
+            try {
+                // 发送图片到后端
+                const response = await fetch('http://127.0.0.1:5000/predict', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                // 解析返回的结果
+                const data = await response.json();
+                if (data.prediction !== undefined) {
+                    resultText.innerText = `预测结果：${data.prediction}`;
+                } else {
+                    resultText.innerText = '预测时出错。';
+                }
+            } catch (error) {
+                resultText.innerText = '发生错误：' + error.message;
+            }
+        }
+    </script>
+</body>
+
+</html>

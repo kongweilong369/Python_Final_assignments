@@ -1,0 +1,85 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #c27ecf;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 20px;
+    font-size: 2em;
+    color: white;
+}
+
+input[type="file"] {
+    margin: 20px 0;
+}
+
+#uploaded-image {
+    max-width: 500px;
+    display: block;
+    margin-top: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #FF6347;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 1em;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #FF4500;
+}
+
+#result {
+    margin-top: 30px;
+    color: white;
+}
+
+#detection-output {
+    font-size: 1.2em;
+    color: #FFD700;
+}
+
+/* 心形图案 */
+.aixin {
+    position: absolute;
+    transform: translate(0px, 0px) scale(1);
+    transition: all 0.7s ease-out;
+}
+
+.aixin::before,
+.aixin::after {
+    content: '';
+    position: absolute;
+    left: 10px;
+    height: 16px;
+    width: 10px;
+    background-color: inherit;
+    border-radius: 5px 5px 0 0;
+    transform: rotate(-45deg);
+    transform-origin: 0 100%;
+}
+
+.aixin::after {
+    left: 0;
+    transform: rotate(45deg);
+    transform-origin: 100% 100%;
+}
