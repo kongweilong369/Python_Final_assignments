@@ -14,3 +14,4 @@ my_project/
     └── style.css    # 可选的样式文件
     
 采用的模型为VIT_Base，数据集为image-net，分类类别有1000种。
+这段代码实现了一个简单的 Flask Web 应用，用户可以通过浏览器上传图像，服务器使用预训练的 Vision Transformer (ViT) 模型对图像进行分类，并返回预测的类别名称。
