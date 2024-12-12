@@ -13,3 +13,4 @@ my_project/
 
     └── style.css    # 可选的样式文件
     
+采用的模型为VIT_Base，数据集为image-net，分类类别有1000种。
